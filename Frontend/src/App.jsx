@@ -12,20 +12,6 @@ function App() {
   const [feedback, setFeedback] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
 
-  // const dummyQuestions = [
-  //   {
-  //     id: 1,
-  //     questionText: "What is the capital of France?",
-  //     options: ["Berlin", "Madrid", "Paris", "Rome"],
-  //     correctAnswer: "Paris"
-  //   },
-  //   {
-  //     id: 2,
-  //     questionText: "Which planet is known as the Red Planet?",
-  //     options: ["Earth", "Mars", "Jupiter", "Venus"],
-  //     correctAnswer: "Mars"
-  //   }
-  // ]
 
   useEffect(() => {
     const fetchQuestions = async() => {
@@ -76,7 +62,6 @@ function App() {
     }
 
     const FEEDBACK_DURATION = 800
-    const SPINNER_DURATION = 1500
 
     setTimeout(() => {
     setProcessing(true)
@@ -87,12 +72,12 @@ function App() {
       setProcessing(false)
       setIndex(prevIndex => prevIndex + 1)
     },FEEDBACK_DURATION)
-    }, SPINNER_DURATION)
+    })
     
   }
 
   const loadQuizGame = () => {
-    if (loading || processingAnswer) {
+    if (loading) {
       return<Spinner/>
     }
     if (error) {
