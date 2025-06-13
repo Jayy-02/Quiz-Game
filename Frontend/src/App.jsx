@@ -195,7 +195,7 @@ function App() {
         <div>
           <h2>Quiz Finished!</h2>
           <p>Your Score: <span class="score">{score}</span> of <span>{totalQuestions}</span></p>
-          <button name = "restart" onClick={loadNewQuiz}>Play Again</button>
+          <button class = "classyButton" onClick={loadNewQuiz}>Play Again</button>
         </div>
       </>
     )
@@ -219,7 +219,7 @@ function App() {
           <h2>Quiz Game</h2>
         </div>
         <div>
-          <button name = "restart" onClick={reloadQuiz}>Restart</button>
+          <button class = "classyButton" onClick={reloadQuiz}>Restart</button>
         </div>
         </div>
       <div class="game-box">
