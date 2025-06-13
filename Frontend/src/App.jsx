@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-
+import './index.css'
 import './App.css'
 
 function App() {
@@ -11,10 +11,12 @@ function App() {
   const [error, setError] = useState(null)
   const [feedback, setFeedback] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
+  const [trigger, setTrigger] = useState(0)
 
 
   useEffect(() => {
     const fetchQuestions = async() => {
+    setLoading(true)
       try {
         const response = await fetch('https://the-trivia-api.com/v2/questions/')
         if (!response.ok) {
@@ -34,15 +36,18 @@ function App() {
         })
         console.log("Converted questions")
         setQuestions(convertQuestions)
-        setLoading(false);
+        setIndex(0)
+        setScore(0)
+
       } catch (err) {
         console.error("Error fetching questions",err)
         setError("Failed to load questions. Please try again later.");
+      } finally {
         setLoading(false);
       }
     }
     fetchQuestions()
-  },[])
+  },[trigger])
 
   const handleSelection = (option) => {
     console.log("Selected", option)
@@ -98,13 +103,21 @@ function App() {
     )
   }
 
+  const loadNewQuiz = () => {
+    setTrigger(prev=>prev+1)
+  }
+  const reloadQuiz = () => {
+    setIndex(0)
+    setScore(0)
+  }
+
 
   const Spinner = () => {
     return (
       <>
         <div>
           <div>
-            <p>Loading Questions ...</p>
+            <a>Loading Questions ...</a>
           </div>
         </div>
       </>
@@ -114,7 +127,7 @@ function App() {
     return (
       <>
         <div>
-          <h3>Question {questionIndex + 1 }</h3>
+          <h3 className = " animate">Question {questionIndex + 1 }</h3>
           <p>{question.questionText}</p>
           <div>
             {question.options.map((option, index) => (
@@ -135,18 +148,18 @@ function App() {
     )
   }
   const AnswerOption = ({ optionText, onClick, isSelected, isCorrect, isIncorrect, showCorrectAnswer, disabled }) => {
-    let classyButton = "w-full text-white font-bold py-3 px-4 rounded-md transition duration-300 ease-in-out transform shadow-md"
+    let classyButton = "classyButton"
     if (disabled && !isSelected && !showCorrectAnswer) {
-      classyButton += "bg-gray-300 text-gray-400 cursor-not-allowed"
+      classyButton += " option-disabled"
     } else
       if (isCorrect) {
-      classyButton+= "bg-green-500 animate-pulse"
+      classyButton += " option-correct" + " animate"
     }else if (isIncorrect) {
-      classyButton+="bg-red-500 animate-[shake_0.5s_cubic-bezier(.36,.07,.19,.97)_both;]"
+      classyButton += " option-incorrect"
     } else if (showCorrectAnswer) {
-      classyButton +="bg-blue-400 border-2 border-blue-600"
+      classyButton += " show-correct"
     }else{
-      classyButton+= "bg-blue-500 hover:bg-blue-600"
+      classyButton
     }
     return (
       <>
@@ -181,7 +194,8 @@ function App() {
       <>
         <div>
           <h2>Quiz Finished!</h2>
-          <p>Your Score: <span>{score}</span> of <span>{totalQuestions }</span></p>
+          <p>Your Score: <span class="score">{score}</span> of <span>{totalQuestions}</span></p>
+          <button name = "restart" onClick={loadNewQuiz}>Play Again</button>
         </div>
       </>
     )
@@ -200,11 +214,18 @@ function App() {
 
   return (
     <>
-      <div>
-        <div>
-          <h1>Quiz Game</h1>
-          {loadQuizGame()}
+      <div class="navbar">
+        <div class="head">
+          <h2>Quiz Game</h2>
         </div>
+        <div>
+          <button name = "restart" onClick={reloadQuiz}>Restart</button>
+        </div>
+        </div>
+      <div class="game-box">
+        <div>
+          {loadQuizGame()}
+     </div>
       </div>
     </>
   )
