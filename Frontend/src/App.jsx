@@ -12,33 +12,51 @@ function App() {
   const [feedback, setFeedback] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
 
-  const dummyQuestions = [
-    {
-      id: 1,
-      questionText: "What is the capital of France?",
-      options: ["Berlin", "Madrid", "Paris", "Rome"],
-      correctAnswer: "Paris"
-    },
-    {
-      id: 2,
-      questionText: "Which planet is known as the Red Planet?",
-      options: ["Earth", "Mars", "Jupiter", "Venus"],
-      correctAnswer: "Mars"
-    }
-  ]
+  // const dummyQuestions = [
+  //   {
+  //     id: 1,
+  //     questionText: "What is the capital of France?",
+  //     options: ["Berlin", "Madrid", "Paris", "Rome"],
+  //     correctAnswer: "Paris"
+  //   },
+  //   {
+  //     id: 2,
+  //     questionText: "Which planet is known as the Red Planet?",
+  //     options: ["Earth", "Mars", "Jupiter", "Venus"],
+  //     correctAnswer: "Mars"
+  //   }
+  // ]
 
   useEffect(() => {
-    setTimeout(() => {
+    const fetchQuestions = async() => {
       try {
-        setQuestions(dummyQuestions);
+        const response = await fetch('https://the-trivia-api.com/v2/questions/')
+        if (!response.ok) {
+          throw new Error(`Error status: ${response.status}`)
+        }
+        const data = await response.json()
+        const convertQuestions = data.map(apiQuestion => {
+          let options = [...apiQuestion.incorrectAnswers, apiQuestion.correctAnswer]
+          options.sort(() => Math.random() - 0.5)
+          
+          return {
+            id: apiQuestion.id,
+            questionText: apiQuestion.question.text,
+            options: options,
+            correctAnswer: apiQuestion.correctAnswer
+          }
+        })
+        console.log("Converted questions")
+        setQuestions(convertQuestions)
         setLoading(false);
       } catch (err) {
-        console.error(err)
+        console.error("Error fetching questions",err)
         setError("Failed to load questions. Please try again later.");
         setLoading(false);
       }
-    }, 1000);
-  }, []);
+    }
+    fetchQuestions()
+  },[])
 
   const handleSelection = (option) => {
     console.log("Selected", option)
