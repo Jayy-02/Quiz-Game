@@ -194,7 +194,7 @@ function App() {
       <>
         <div>
           <h2>Quiz Finished!</h2>
-          <p>Your Score: <span class="score">{score}</span> of <span>{totalQuestions}</span></p>
+          <p>Your Score: <span class="score">{score}</span> out of <span>{totalQuestions}</span></p>
           <button class = "classyButton" onClick={loadNewQuiz}>Play Again</button>
         </div>
       </>
