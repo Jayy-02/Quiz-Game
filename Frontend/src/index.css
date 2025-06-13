@@ -5,12 +5,42 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #F8F8F8;
+  background-image: linear-gradient(to bottom right, 
+  #FDFDFD 0%,    
+    #4e3394 70%,   
+    #FDFDFD 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+p{
+  font-weight: bold;
+  color: black;
+}
+
+span{
+  color: #747bff;
+  font-size: large;
+}
+
+.score{
+ animation: animate-pulse 0.3s ease-in-out 0s 5 alternate forwards;
+}
+
+h2{
+  font-weight: bold;
+  font-size: larger;
+  color:#077b9b  ;
+}
+
+h3{
+  color: #077b9b;
+  font-size: xx-large;
+  font-weight: bolder;
 }
 
 a {
@@ -22,36 +52,107 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
+.navbar{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+body .game-box {
+  margin: 0 auto;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-around;
+  min-height: 80vh;
+  max-width: 450px;
+  padding: 0px 20px;
+  background-color: #FFFFFF;
+  border: 1px solid white;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.9);
 }
+ .game-box button{
+  margin-top: 10px;
+ }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
+button, .classyButton {
+  border-radius: 10px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #641d7c;
+  background-image: linear-gradient(to bottom right, 
+ #4e3394 0%,
+  #1099be 40%,    
+    #4e3394 100%);
   cursor: pointer;
+  width: 100%;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+.option-disabled{
+  color:#9ca3af;
+  cursor:not-allowed;
+  opacity: 0.7;
 }
+
+.option-correct{
+  background-image: linear-gradient(to bottom right, 
+ #01a54b 0%,
+  #10be87 40%,    
+    #01a54b 100%)
+}
+
+.option-incorrect{
+ animation: shake 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95) both;
+ background-image: linear-gradient(to bottom right, 
+ #ac120a 0%,
+  #ff6c47 40%,    
+    #ac120a 100%)
+}
+
+.show-correct{
+  transform: scale3d(2);
+}
+
+button:hover {
+  color: #000000;
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@keyframes animate-pulse {
+  0%{
+    transform: scale(1);
+    opacity: 1;
+  }
+  50%{
+    transform: scale(1.25);
+    opacity: 0.5;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+.animate{
+  animation: animate-pulse 0.5s ease-in-out 0s 2 alternate forwards;
+
 }
 
 @media (prefers-color-scheme: light) {
